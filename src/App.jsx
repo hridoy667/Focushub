@@ -1,16 +1,14 @@
-import './App.css'
-import Header from './components/Header'
-import TaskItem from './components/TaskManager/TaskItem'
-function App() {
-  
+import './App.css';
+import Header from './components/Header';
+import TaskManager from './components/TaskManager/TaskManager';
 
+function App() {
   return (
     <>
-      <Header/>
-      <TaskItem/>
-      
+      <Header />
+      <TaskManager />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

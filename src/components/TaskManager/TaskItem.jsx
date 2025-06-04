@@ -1,54 +1,42 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 
-const TaskManager = () => {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: 'Finish project report',
-      date: '2025-06-01',
-      time: '09:30',
-    },
-    {
-      id: 2,
-      title: 'Buy groceries',
-      date: '',
-      time: '',
-    },
-    {
-      id: 3,
-      title: 'Team meeting',
-      date: '2025-06-01',
-      time: '08:00',
-    },
-  ]);
-
-  // Sort tasks: tasks without time go to bottom
-  const sortedTasks = [...tasks].sort((a, b) => {
-    const timeA = a.date && a.time ? new Date(`${a.date}T${a.time}`) : new Date('9999-12-31T23:59');
-    const timeB = b.date && b.time ? new Date(`${b.date}T${b.time}`) : new Date('9999-12-31T23:59');
-    return timeA - timeB;
-  });
-
+const TaskItem = ({ task,onDelete, onEdit}) => {
+  const handleEditClick = () => {
+    const newTitle = prompt('Edit task title:', task.title);
+    if (newTitle !== null && newTitle.trim() !== '') {
+      // Pass updated task to parent
+      onEdit({ ...task, title: newTitle });
+    }
+  };
   return (
-    <div className="flex flex-col items-center mt-10 px-4">
-      <h2 className="text-2xl font-bold mb-4">📝 Your Tasks</h2>
-
-      <div className="w-full max-w-md bg-white shadow-md rounded-lg p-4 space-y-3">
-        {sortedTasks.map((task) => (
-          <div key={task.id} className="border p-3 rounded-md bg-gray-100">
-            <p className="font-semibold">{task.title}</p>
-            {task.date && task.time ? (
-              <p className="text-sm text-gray-600">
-                ⏰ {task.date} at {task.time}
-              </p>
-            ) : (
-              <p className="text-sm text-gray-400 italic">No time specified</p>
-            )}
-          </div>
-        ))}
+    <div className="border p-3 rounded-md bg-gray-100 hover:bg-gray-50 transition-colors duration-200 group">
+      <div className="flex justify-between items-start">
+        <div className="flex-1">
+          <p className="font-semibold">{task.title}</p>
+          {task.date && task.time ? (
+            <p className="text-sm text-gray-600">
+              ⏰ {task.date} at {task.time}
+            </p>
+          ) : (
+            <p className="text-sm text-gray-400 italic">
+              No time specified
+            </p>
+          )}
+        </div>
+        
+        <div className="flex space-x-2 group-hover:opacity-100">
+          <button className="text-gray-500 hover:text-blue-500"
+          onClick={handleEditClick}>
+            <FiEdit2 size={18} />
+          </button>
+          <button className="text-gray-500 hover:text-red-500" onClick={onDelete}>
+            <FiTrash2 size={18} />
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default TaskManager;
+export default TaskItem;
