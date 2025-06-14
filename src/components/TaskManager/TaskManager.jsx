@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import TaskItem from './TaskItem';
 import TaskInput from './TaskInput';
+import TaskList from './TaskList';
 
 const TaskManager = () => {
     const [tasks, setTasks] = useState([]);
@@ -11,44 +11,44 @@ const TaskManager = () => {
         setTasks(storedTasks);
     }, []);
 
-    // Sort tasks: tasks without time go to bottom
-    const sortedTasks = [...tasks].sort((a, b) => {
-        const timeA = a.date && a.time ? new Date(`${a.date}T${a.time}`) : new Date('9999-12-31T23:59');
-        const timeB = b.date && b.time ? new Date(`${b.date}T${b.time}`) : new Date('9999-12-31T23:59');
-        return timeA - timeB;
-    });
-
     const handleAddTask = (newTask) => {
         const updatedTasks = [...tasks, { ...newTask, id: Date.now() }];
         setTasks(updatedTasks);
         localStorage.setItem('task', JSON.stringify(updatedTasks));
     };
-    // Delete task handler
-const handleDeleteTask = (taskId) => {
-    const updatedTasks = tasks.filter(task => task.id !== taskId);
-    setTasks(updatedTasks);
-    localStorage.setItem('task', JSON.stringify(updatedTasks));
-  };
-  
-  // Edit task handler (simple version to replace task by id)
-  const handleEditTask = (updatedTask) => {
-    const updatedTasks = tasks.map(task => 
-      task.id === updatedTask.id ? updatedTask : task
-    );
-    setTasks(updatedTasks);
-    localStorage.setItem('task', JSON.stringify(updatedTasks));
-  };
+
+    const handleDeleteTask = (id) => {
+        const updatedTasks = tasks.filter(task => task.id !== id);
+        setTasks(updatedTasks);
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+      };
+
+    const handleEditTask = (updatedTask) => {
+        const updatedTasks = tasks.map(task =>
+            task.id === updatedTask.id ? updatedTask : task
+        );
+        setTasks(updatedTasks);
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    };
+
     return (
-        <div className="flex flex-col items-start mt-10 px-4">
-            <h2 className="text-2xl font-bold mb-4">📝 Your Tasks</h2>
-            <TaskInput onAddTask={handleAddTask} />
-            <div className="w-full max-w-md bg-white shadow-md rounded-lg p-4 space-y-3">
-                {sortedTasks.map((task) => (
-                    <TaskItem key={task.id} task={task}  onDelete={() => handleDeleteTask(task.id)} 
-                    onEdit={handleEditTask}/>
-                ))}
+        <div className="flex flex-col md:flex-row gap-6 p-4 max-w-7xl mx-auto">
+            {/* Main task management area (full width when alone) */}
+            <div className="w-full">
+                <h2 className="text-2xl font-bold mb-4">📝 Your Tasks</h2>
+                <TaskInput onAddTask={handleAddTask} />
+                <div className="mt-4 bg-white rounded-lg p-4">
+                    {tasks.length === 0 ? (
+                        <p className="text-gray-500 text-center">No task added</p>
+                    ) : (
+                        <TaskList
+                            tasks={tasks}
+                            onDelete={handleDeleteTask}
+                            onEdit={handleEditTask}
+                        />
+                    )}
+                </div>
             </div>
-            
         </div>
     );
 };
