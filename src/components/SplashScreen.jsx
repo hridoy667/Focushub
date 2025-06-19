@@ -10,7 +10,7 @@ const SplashScreen = () => {
       transition={{ duration: 1.5, delay: 1.5 }} // fade out after delay
     >
       <div className="text-center space-y-4">
-      <h1 className="text-4xl md:text-5xl font-bold text-white tracking-wide">
+      <h1 className="text-8xl md:text-6xl font-bold text-white tracking-wide">
             <span className="text-yellow-500">Focus</span>
             <span className="text-white">Hub</span>
             </h1>

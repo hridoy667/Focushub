@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
-
 import Header from './components/Header';
 import TaskManager from './components/TaskManager/TaskManager';
 import QuoteGenerator from './components/QuoteGenerator';
@@ -8,37 +6,34 @@ import WeatherView from './components/WeatherView';
 import SplashScreen from './components/SplashScreen';
 
 function App() {
-  const [showSplash, setShowSplash] = useState(() => {
-    const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
-    return !hasSeenSplash; // showSplash = true if not seen
-  });
+  const [showSplash, setShowSplash] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    let timer;
-    if (showSplash) {
-      sessionStorage.setItem('hasSeenSplash', 'true');
-      timer = setTimeout(() => {
-        setShowSplash(false);
-      }, 3000);
-    }
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
-    return () => clearTimeout(timer); // always clear timeout
-  }, [showSplash]);
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => !prev);
+  };
+
+  const backgroundClass = darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900';
 
   if (showSplash) return <SplashScreen />;
 
   return (
-    <div className="min-h-screen  bg-gradient-to-r from-blue-300 via-purple-200 to-blue-100 bg-gray-50">
-      <Header />
+    <div className={`min-h-screen transition-colors duration-300 ${backgroundClass}`}>
+      {/* Pass toggleDarkMode to header */}
+      <Header onToggleDarkMode={toggleDarkMode} isDarkMode={darkMode} />
 
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Task Manager (2/3 width) */}
           <div className="w-full lg:w-2/3">
-            <TaskManager />
+            <TaskManager/>
           </div>
-
-          {/* Sidebar (1/3 width) */}
           <div className="w-full lg:w-1/3 space-y-6">
             <WeatherView />
             <QuoteGenerator />

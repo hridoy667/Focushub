@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+/* App.css or global CSS */
+body.dark-mode {
+    background-color: #111827; /* Tailwind's gray-900 */
+    color: #f9fafb;            /* Tailwind's gray-50 */
+  }
+  
+  .task-item {
+    background-color: #f3f4f6; /* Tailwind's gray-100 */
+  }
+  body.dark-mode .task-item {
+    background-color: #1f2937; /* Tailwind's gray-800 */
+  }
+  

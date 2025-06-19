@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import TaskInput from './TaskInput';
 import TaskList from './TaskList';
 
-const TaskManager = () => {
+const TaskManager = ({ darkMode }) => {
   const [tasks, setTasks] = useState([]);
 
-  // Load tasks from localStorage on first render
   useEffect(() => {
     const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
     setTasks(savedTasks);
@@ -39,8 +38,8 @@ const TaskManager = () => {
     <div className="flex flex-col md:flex-row gap-6 p-4 max-w-7xl mx-auto">
       <div className="w-full">
         <h2 className="text-2xl font-bold mb-4">📝 Your Tasks</h2>
-        <TaskInput onAddTask={handleAddTask} />
-        <div className="mt-4 bg-transparent rounded-lg p-4">
+        <TaskInput onAddTask={handleAddTask} darkMode={darkMode} />
+        <div className="mt-4 rounded-lg p-4">
           {tasks.length === 0 ? (
             <p className="text-gray-500 text-center">No task added</p>
           ) : (
@@ -48,6 +47,7 @@ const TaskManager = () => {
               tasks={tasks}
               onDelete={handleDeleteTask}
               onEdit={handleEditTask}
+              darkMode={darkMode}
             />
           )}
         </div>

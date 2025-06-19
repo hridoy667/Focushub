@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../assets/logo.png';
 
-const Header = () => {
+const Header = ({onToggleDarkMode, isDarkMode}) => {
   return (
     <header className="bg-gradient-to-r from-blue-500 to-indigo-800 shadow-lg">
       <div className="container mx-auto px-4 py-3">
@@ -23,7 +23,12 @@ const Header = () => {
               Productivity • Weather • Inspiration
             </p>
           </div>
-          
+          <button
+        onClick={onToggleDarkMode}
+        className=" text-blue-500 px-1 py-1 rounded-lg shadow hover:bg-blue-100"
+      >
+        {isDarkMode ? '☀' : '🌙' }
+      </button>
         </div>
       </div>
     </header>
