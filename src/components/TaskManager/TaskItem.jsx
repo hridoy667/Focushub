@@ -25,7 +25,8 @@ const TaskItem = ({ task, onDelete, onEdit }) => {
   };
 
   return (
-    <div className="border p-3 rounded-md bg-gray-100 hover:bg-gray-50 transition-colors duration-200 group">
+    <div className="border p-3 rounded-lg bg-gray-100 bg-gradient-to-br from-white via-blue-100 to-purple-100
+ hover:bg-gray-50 transition-colors duration-200 group">
       {isEditing ? (
         <div className="space-y-3">
           <input

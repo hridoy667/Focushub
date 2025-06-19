@@ -27,10 +27,7 @@ const QuoteGenerator = () => {
   }, []);
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 max-w-sm w-full">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-gray-800">Daily Inspiration</h2>
-      </div>
+    <div className="bg-transparent rounded-lg shadow-md p-6 max-w-sm w-full">
 
       <div className="min-h-20 flex flex-col justify-center mb-4">
         <blockquote className="text-lg italic text-gray-700">
@@ -41,9 +38,6 @@ const QuoteGenerator = () => {
         </p>
       </div>
 
-      <p className="text-xs text-gray-500 mt-6 text-center">
-        Offline quotes mode
-      </p>
     </div>
   );
 };

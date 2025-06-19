@@ -23,6 +23,7 @@ const Header = () => {
               Productivity • Weather • Inspiration
             </p>
           </div>
+          
         </div>
       </div>
     </header>
